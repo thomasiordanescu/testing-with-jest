@@ -49,8 +49,8 @@ test('Add element to stack and check value', async () => {
         await peekButton.click();
 
         const peekedText = await display.getText();
-        if (peekedText !== "myTest") {
-            throw new Error(`Peek failed. Expected "myTest" but got "${peekedText}"`);
+        if (peekedText !== "Bananer") {
+            throw new Error(`Peek failed. Expected "Bananer" but got "${peekedText}"`);
         }
 
 

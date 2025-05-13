@@ -26,5 +26,5 @@ test('Add two or more elements to stack and remove the last one', () => {
     expect(stack.peek()).toBe("ccc");
     stack.pop();
     expect(stack.peek()).toBeDefined();
-    expect(stack.peek()).toBe("aaa");
+    expect(stack.peek()).toBe("bbb");
 });

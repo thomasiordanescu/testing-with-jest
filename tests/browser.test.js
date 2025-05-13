@@ -34,3 +34,27 @@ describe('Clicking "Pusha till stacken"', () => {
         await alert.accept();
     });
 });
+
+test('Add element to stack and check value', async () => {
+    try {
+        const pushButton = await driver.findElement(By.id("push"));
+        
+        await driver.executeScript("window.prompt = () => 'myTest';");
+        await pushButton.click();
+
+        const display = await driver.findElement(By.id("top_of_stack"));
+        await driver.wait(until.elementTextIs(display, "myTest"), 2000);
+
+        const peekButton = await driver.findElement(By.id("peek"));
+        await peekButton.click();
+
+        const peekedText = await display.getText();
+        if (peekedText !== "myTest") {
+            throw new Error(`Peek failed. Expected "myTest" but got "${peekedText}"`);
+        }
+
+
+    } catch (err) {
+        throw err;
+    }
+});

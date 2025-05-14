@@ -35,26 +35,28 @@ describe('Clicking "Pusha till stacken"', () => {
     });
 });
 
-test('Add element to stack and check value', async () => {
-    try {
-        const pushButton = await driver.findElement(By.id("push"));
-        
-        await driver.executeScript("window.prompt = () => 'myTest';");
-        await pushButton.click();
-
-        const display = await driver.findElement(By.id("top_of_stack"));
-        await driver.wait(until.elementTextIs(display, "myTest"), 2000);
-
-        const peekButton = await driver.findElement(By.id("peek"));
-        await peekButton.click();
-
-        const peekedText = await display.getText();
-        if (peekedText !== "Bananer") {
-            throw new Error(`Peek failed. Expected "Bananer" but got "${peekedText}"`);
-        }
-
-
-    } catch (err) {
-        throw err;
-    }
+describe('Add and remove element to stack and check values', () => {
+    it('Add "myTest" to stack', async () => {
+        let push = await driver.findElement(By.id('push'));
+        await push.click();
+        let dialog = await driver.switchTo().alert();
+        await dialog.sendKeys("myTest");
+        await dialog.accept();
+        let stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("myTest");
+    });
+    it('Remove "myTest" from stack', async () => {
+        let pop = await driver.findElement(By.id('pop'));
+        await pop.click();
+        let dialog = await driver.switchTo().alert();
+        await dialog.accept();
+        let stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("myTest");
+    });
+    it('Refresh stack', async () => {
+        let peek = await driver.findElement(By.id('peek'));
+        await peek.click();
+        let stack = await driver.findElement(By.id('top_of_stack')).getText();
+        expect(stack).toEqual("Bananer");
+    });
 });
